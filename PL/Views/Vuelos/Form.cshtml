@@ -65,6 +65,16 @@
                 </div>
                 @Html.TextBoxFor(model => model.Hora_LLegada)
             </div>
+
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <div style="margin-bottom: 10px;">
+                    <label style="text-align: center;">
+                        @Html.LabelFor(model => model.aerolinia.AerolineaNombre)
+                    </label>
+                </div>
+                @Html.DropDownListFor(Model => Model.aerolinia.Id_Aerolinia, new SelectList(Model.aerolinia.ListAerolineas, "Id_Aerolinia",
+            "AerolineaNombre"), "Seleccione una opcion", new { @class = "form-control mb-2" })
+            </div>
         </div>
 
     </div>

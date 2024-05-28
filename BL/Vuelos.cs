@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using ML;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -84,22 +85,23 @@ namespace BL
             {
                 using(var context = new GitHubProyectoHtContext())
                 {
-                    var query = context.Vuelos.FromSql($"EXECUTE dbo.GetAllVuelo").ToList();
-
+                    var query = (from obj in context.Vuelos
+                                join arl in context.Aerolineas on obj.IdAerolinea equals arl.IdAerolinea
+                                select new {obj, aerolinea = arl.AerolineaNombre}).ToList();
                     if (query != null)
                     {
                         foreach(var registros in query)
                         {
                             ML.Vuelos vuelo = new ML.Vuelos();
 
-                            vuelo.Id_Vuelo = registros.IdVuelo;
-                            vuelo.Numero_Vuelo = registros.NumeroVuelo;
-                            vuelo.Origen = registros.Origen;
-                            vuelo.Hora_Salida = registros.HoraSalida;
-                            vuelo.Hora_LLegada = registros.HoraLlegada;
+                            vuelo.Id_Vuelo = registros.obj.IdVuelo;
+                            vuelo.Numero_Vuelo = registros.obj.NumeroVuelo;
+                            vuelo.Origen = registros.obj.Origen;
+                            vuelo.Hora_Salida = registros.obj.HoraSalida;
+                            vuelo.Hora_LLegada = registros.obj.HoraLlegada;
                             vuelo.aerolinia = new ML.Aerolinea();
-                            vuelo.aerolinia.Id_Aerolinia = registros.IdAerolineaNavigation.IdAerolinea;
-                            vuelo.aerolinia.AerolineaNombre = registros.IdAerolineaNavigation.AerolineaNombre;
+                            vuelo.aerolinia.Id_Aerolinia = Convert.ToInt32(registros.obj.IdAerolinea);
+                            vuelo.aerolinia.AerolineaNombre = registros.aerolinea;
 
                             vuelos.Add(vuelo);
                         }

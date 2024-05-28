@@ -8,9 +8,10 @@ namespace PL.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://localhost:7240/api/Vuelo/");
+                client.BaseAddress = new Uri("https://localhost:7240/api/Vuelos/");
 
                 var responseTask = client.GetAsync("GetAll");
                 responseTask.Wait();
@@ -20,7 +21,7 @@ namespace PL.Controllers
                 {
                     ML.Vuelos vuelos = new ML.Vuelos();
                     vuelos.aerolinia = new ML.Aerolinea();
-
+                    vuelos.ListVuelos = new List<ML.Vuelos>();
                     var result1 = BL.Aerolinea.GetAll();
                     vuelos.aerolinia.ListAerolineas = result1.Item3;
 
@@ -30,6 +31,7 @@ namespace PL.Controllers
                 {
                     ML.Vuelos vuelos = new ML.Vuelos();
                     vuelos.aerolinia = new ML.Aerolinea();
+                    vuelos.ListVuelos = new List<ML.Vuelos>();
                     return View(vuelos);
                 }
             }            
@@ -48,7 +50,7 @@ namespace PL.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://localhost:7240/api/Vuelo/");
+                    client.BaseAddress = new Uri("https://localhost:7240/api/Vuelos/");
 
                     var responseTask = client.GetAsync("GetById?IdVuelo=" + IdVuelo);
                     responseTask.Wait();
@@ -79,7 +81,7 @@ namespace PL.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://localhost:7240/api/Vuelo/");
+                    client.BaseAddress = new Uri("https://localhost:7240/api/Vuelos/");
 
                     var responseTask = client.PostAsJsonAsync<ML.Vuelos>("Update", vuelo);
                     responseTask.Wait();
@@ -101,7 +103,7 @@ namespace PL.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("https://localhost:7240/api/Vuelo/");
+                    client.BaseAddress = new Uri("https://localhost:7240/api/Vuelos/");
 
                     var responseTask = client.PostAsJsonAsync<ML.Vuelos>("Add", vuelo);
                     responseTask.Wait();
@@ -126,7 +128,7 @@ namespace PL.Controllers
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("http://localhost:7240/api/Vuelo");
+                    client.BaseAddress = new Uri("http://localhost:7240/api/Vuelos/");
 
                     var responseTask = client.DeleteAsync("Delete?IdVuelo=" + IdVuelo);
                     responseTask.Wait();

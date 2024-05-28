@@ -10,16 +10,20 @@ namespace SL.Controllers
         [HttpGet]
         [Route("GetAll")]
 
-        public IActionResult GetAll(ML.Vuelos vuelos)
+        public IActionResult GetAll()
         {
+            ML.Vuelos vuelos= new ML.Vuelos();
             var result  = BL.Vuelos.GetAll();
+            vuelos.ListVuelos = new List<ML.Vuelos>();
             if (result.Item1)
             {
-                return Ok(result.Item3);
+                
+                vuelos.ListVuelos = result.Item3;
+                return Ok(result);
             }
             else
             {
-                return BadRequest(result.Item3);
+                return BadRequest(result);
             }
         }
 
@@ -30,7 +34,7 @@ namespace SL.Controllers
             var result = BL.Vuelos.Add(vuelos);
             if (result.Item1)
             {
-                return Ok(result.Item1);
+                return Ok(result);
             }
             else
             {
@@ -46,7 +50,7 @@ namespace SL.Controllers
             var result = BL.Vuelos.GetById(id);
             if(result.Item1)
             {
-                return Ok(result.Item3);
+                return Ok(result);
             }
             else
             {
@@ -62,7 +66,7 @@ namespace SL.Controllers
             var result = BL.Vuelos.Update(vuelos);
             if (result.Item1)
             {
-                return Ok(result.Item3);
+                return Ok(result);
             }
             else
             {
