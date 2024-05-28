@@ -44,7 +44,7 @@ namespace SL.Controllers
         public IActionResult GetById(int id)
         {
             var result = BL.Vuelos.GetById(id);
-            if(result.Item3)
+            if(result.Item1)
             {
                 return Ok(result.Item3);
             }
@@ -53,6 +53,8 @@ namespace SL.Controllers
                 return BadRequest(result.Item3);
             }
         }
+
+
         [HttpPut]
         [Route("Update")]
         public IActionResult Update(ML.Vuelos vuelos)
