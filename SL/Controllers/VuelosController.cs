@@ -15,7 +15,7 @@ namespace SL.Controllers
             var result  = BL.Vuelos.GetAll();
             if (result.Item1)
             {
-                return Ok(result.Item1);
+                return Ok(result.Item3);
             }
             else
             {
@@ -44,7 +44,7 @@ namespace SL.Controllers
         public IActionResult GetById(int id)
         {
             var result = BL.Vuelos.GetById(id);
-            if(result.Item1)
+            if(result.Item3)
             {
                 return Ok(result.Item3);
             }
