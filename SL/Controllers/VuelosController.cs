@@ -8,7 +8,7 @@ namespace SL.Controllers
     public class VuelosController : ControllerBase
     {
         [HttpGet]
-        [Route("/Add")]
+        [Route("GetAll")]
 
         public IActionResult GetAll(ML.Vuelos vuelos)
         {
@@ -24,7 +24,7 @@ namespace SL.Controllers
         }
 
         [HttpPost]
-        [Route("/Add")]
+        [Route("Add")]
         public IActionResult Add ([FromBody]ML.Vuelos vuelos)
         {
             var result = BL.Vuelos.Add(vuelos);
@@ -40,7 +40,7 @@ namespace SL.Controllers
         }
 
         [HttpGet]
-        [Route("/GetById")]
+        [Route("GetById")]
         public IActionResult GetById(int id)
         {
             var result = BL.Vuelos.GetById(id);
@@ -54,7 +54,7 @@ namespace SL.Controllers
             }
         }
         [HttpPut]
-        [Route("/Update")]
+        [Route("Update")]
         public IActionResult Update(ML.Vuelos vuelos)
         {
             var result = BL.Vuelos.Update(vuelos);
@@ -69,7 +69,7 @@ namespace SL.Controllers
         }
 
         [HttpDelete]
-        [Route("/Delete")]
+        [Route("Delete")]
         public IActionResult Delete(int id)
         {
             var result = BL.Vuelos.Delete(id);
