@@ -19,7 +19,7 @@ namespace SL.Controllers
             {
                 
                 vuelos.ListVuelos = result.Item3;
-                return Ok(result);
+                return Ok(result.Item3);
             }
             else
             {
@@ -29,7 +29,7 @@ namespace SL.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public IActionResult Add ([FromBody]ML.Vuelos vuelos)
+        public IActionResult Add ([FromBody]ML.Vuelos? vuelos)
         {
             var result = BL.Vuelos.Add(vuelos);
             if (result.Item1)
@@ -45,23 +45,23 @@ namespace SL.Controllers
 
         [HttpGet]
         [Route("GetById")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int IdVuelo)
         {
-            var result = BL.Vuelos.GetById(id);
-            if(result.Item1)
+            var result = BL.Vuelos.GetById(IdVuelo);
+            if (result.Item1)
             {
-                return Ok(result);
+                return Ok(result.Item3);
             }
             else
             {
-                return BadRequest(result.Item3);
+                return BadRequest(result);
             }
         }
 
 
         [HttpPut]
         [Route("Update")]
-        public IActionResult Update(ML.Vuelos vuelos)
+        public IActionResult Update([FromBody]ML.Vuelos? vuelos)
         {
             var result = BL.Vuelos.Update(vuelos);
             if (result.Item1)
@@ -76,9 +76,9 @@ namespace SL.Controllers
 
         [HttpDelete]
         [Route("Delete")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int IdVuelo)
         {
-            var result = BL.Vuelos.Delete(id);
+            var result = BL.Vuelos.Delete(IdVuelo);
             if (result.Item1)
             {
                 return Ok(result.Item1);
