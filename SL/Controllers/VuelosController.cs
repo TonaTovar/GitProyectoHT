@@ -46,7 +46,7 @@ namespace SL.Controllers
             var result = BL.Vuelos.GetById(id);
             if(result.Item1)
             {
-                return Ok(result.Item1);
+                return Ok(result.Item3);
             }
             else
             {
@@ -60,7 +60,7 @@ namespace SL.Controllers
             var result = BL.Vuelos.Update(vuelos);
             if (result.Item1)
             {
-                return Ok(result.Item1);
+                return Ok(result.Item3);
             }
             else
             {
