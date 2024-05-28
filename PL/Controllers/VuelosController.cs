@@ -1,7 +1,6 @@
 ﻿using DL;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Json;
-using System.Text.Json;
+
 namespace PL.Controllers
 {
     public class VuelosController : Controller
