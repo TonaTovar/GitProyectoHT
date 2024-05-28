@@ -1,14 +1,13 @@
 ﻿using DL;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Net.Http.Json;
+using System.Text.Json;
 namespace PL.Controllers
 {
     public class VuelosController : Controller
     {
-        [HttpGet]
         public IActionResult GetAll()
         {
-            
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://localhost:7240/api/Vuelos/");
@@ -19,26 +18,20 @@ namespace PL.Controllers
                 var result = responseTask.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    var readTask = result.Content.ReadAsAsync<List<ML.Vuelos>>();
-                    readTask.Wait();
+                    var content = result.Content.ReadAsStringAsync().Result;
+                    var vuelos = JsonSerializer.Deserialize<List<ML.Vuelos>>(content);
 
-                    var jsonResult = readTask.Result;
+                    ML.Vuelos vuelosModel = new ML.Vuelos();
+                    vuelosModel.aerolinia = new ML.Aerolinea();
+                    vuelosModel.ListVuelos = vuelos;
 
-                    if(jsonResult != null)
+                    var result1 = BL.Aerolinea.GetAll();
+                    if (result1.Item1)
                     {
-                        ML.Vuelos vuelos = new ML.Vuelos();
-                        vuelos.aerolinia = new ML.Aerolinea();
-                        vuelos.ListVuelos = new List<ML.Vuelos>();
-                        var result1 = BL.Aerolinea.GetAll();
-                        vuelos.aerolinia.ListAerolineas = result1.Item3;
-                        vuelos.ListVuelos = jsonResult;
+                        vuelosModel.aerolinia.ListAerolineas = result1.Item3;
+                    }
 
-                        return View(vuelos);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return View(vuelosModel);
                 }
                 else
                 {
@@ -47,7 +40,7 @@ namespace PL.Controllers
                     vuelos.ListVuelos = new List<ML.Vuelos>();
                     return View(vuelos);
                 }
-            }            
+            }
         }
 
         [HttpGet]
@@ -60,7 +53,7 @@ namespace PL.Controllers
             var result1 = BL.Aerolinea.GetAll();
             vuelos.aerolinia.ListAerolineas = result1.Item3;
 
-            if (IdVuelo != 0)
+            if (IdVuelo != null)
             {
                 using (HttpClient client = new HttpClient())
                 {
@@ -72,28 +65,12 @@ namespace PL.Controllers
                     var result = responseTask.Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        var readTask = result.Content.ReadAsAsync<ML.Vuelos>();
-                        readTask.Wait();
-
-                        var jsonResult = readTask.Result;
-
-                        if (jsonResult != null)
-                        {
-                            vuelos = readTask.Result;
-                            var result2 = BL.Aerolinea.GetAll();
-                            vuelos.aerolinia.ListAerolineas = result2.Item3;
-                            return View(vuelos);
-                        }
-                        else
-                        {
-                            return RedirectToAction("Index", "Home");
-                        }
+                        return View(vuelos);
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return View(vuelos);
                     }
-                    
                 }
 
             }
@@ -113,7 +90,7 @@ namespace PL.Controllers
                 {
                     client.BaseAddress = new Uri("https://localhost:7240/api/Vuelos/");
 
-                    var responseTask = client.PutAsJsonAsync<ML.Vuelos>("Update", vuelo);
+                    var responseTask = client.PostAsJsonAsync<ML.Vuelos>("Update", vuelo);
                     responseTask.Wait();
 
                     var result = responseTask.Result;
