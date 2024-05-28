@@ -19,7 +19,7 @@ namespace SL.Controllers
             }
             else
             {
-                return BadRequest(result);
+                return BadRequest(result.Item3);
             }
         }
 
@@ -50,7 +50,7 @@ namespace SL.Controllers
             }
             else
             {
-                return BadRequest(result);
+                return BadRequest(result.Item3);
             }
         }
         [HttpPut]
