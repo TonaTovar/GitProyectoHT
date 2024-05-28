@@ -12,5 +12,7 @@ namespace ML
         public int Id_Aerolinia { get; set; }
 
         public string AeroliniNombre { get; set; }
+
+        public List<ML.Aerolinia>  ListAerolinias { get; set; }
     }
 }

@@ -18,5 +18,7 @@ namespace ML
         public int Hora_LLegada { get;set; }
 
         public ML.Aerolinia aerolinia { get; set; }
+
+        public List<ML.Vuelos> ListVuelos { get; set; }
     }
 }
