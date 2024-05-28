@@ -22,7 +22,7 @@ namespace ML
         [Display(Name = "Hora de llegada")]
         public string Hora_LLegada { get;set; }
         public ML.Aerolinea aerolinia { get; set; }
-        public List<ML.Vuelos> ListVuelos { get; set; }
+        public List<ML.Vuelos>? ListVuelos { get; set; }
 
     }
 }

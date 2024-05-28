@@ -97,6 +97,7 @@ namespace BL
                             vuelo.Id_Vuelo = registros.obj.IdVuelo;
                             vuelo.Numero_Vuelo = registros.obj.NumeroVuelo;
                             vuelo.Origen = registros.obj.Origen;
+                            vuelo.Destino = registros.obj.Destino;
                             vuelo.Hora_Salida = registros.obj.HoraSalida;
                             vuelo.Hora_LLegada = registros.obj.HoraLlegada;
                             vuelo.aerolinia = new ML.Aerolinea();
@@ -123,17 +124,19 @@ namespace BL
                 using (var context = new GitHubProyectoHtContext())
                 {
                     var query = (from obj in context.Vuelos
-                                 where obj.IdVuelo.Equals(IdVuelos)
-                    select obj).Single();
+                     where obj.IdVuelo.Equals(IdVuelos)
+                     join arl in context.Aerolineas on obj.IdAerolinea equals arl.IdAerolinea
+                     select new { obj, aerolinea = arl.AerolineaNombre }).Single();
 
-                    vuelo.Id_Vuelo = query.IdVuelo;
-                    vuelo.Numero_Vuelo = query.NumeroVuelo;
-                    vuelo.Origen = query.Origen;
-                    vuelo.Hora_Salida = query.HoraSalida;
-                    vuelo.Hora_LLegada = query.HoraLlegada;
+                    vuelo.Id_Vuelo = query.obj.IdVuelo;
+                    vuelo.Numero_Vuelo = query.obj.NumeroVuelo;
+                    vuelo.Origen = query.obj.Origen;
+                    vuelo.Destino = query.obj.Destino;
+                    vuelo.Hora_Salida = query.obj.HoraSalida;
+                    vuelo.Hora_LLegada = query.obj.HoraLlegada;
                     vuelo.aerolinia = new ML.Aerolinea();
-                    vuelo.aerolinia.Id_Aerolinia = query.IdAerolineaNavigation.IdAerolinea;
-                    vuelo.aerolinia.AerolineaNombre = query.IdAerolineaNavigation.AerolineaNombre;
+                    vuelo.aerolinia.Id_Aerolinia = Convert.ToInt32(query.obj.IdAerolinea);
+                    vuelo.aerolinia.AerolineaNombre = query.aerolinea;
 
                     if (query != null)
                     {

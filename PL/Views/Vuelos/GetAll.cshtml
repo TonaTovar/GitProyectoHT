@@ -36,18 +36,18 @@
 
             <tr class="text-center">
                 <td>
-                    <a class="btn btn-secondary" style="background-color: #FFFFFF;" href="@Url.Action("Form", "Vuelos" , new { id_Vuelo = vuelos.Id_Vuelo}) "> <img src="~/Imagen/editar.png" alt="Eliminar" style="width: 30px; height: 30px;" /></a>
+                    <a class="btn btn-secondary" style="background-color: #FFFFFF;" href="@Url.Action("Form", "Vuelos" , new { IdVuelo = vuelos.Id_Vuelo}) "> <img src="~/Imagen/editar.png" alt="Eliminar" style="width: 30px; height: 30px;" /></a>
                 </td>
                 <td>@vuelos.Numero_Vuelo</td>
-                <td>@vuelos.Origen</td>
                 <td>@vuelos.Destino</td>
+                <td>@vuelos.Origen</td>
                 <td>@vuelos.Hora_Salida</td>
                 <td>@vuelos.Hora_LLegada</td>
                 <td>@vuelos.aerolinia.Id_Aerolinia, @vuelos.aerolinia.AerolineaNombre</td>
 
                 <td>
-                    <a class="btn btn-primary" style="background-color: #FFFFFF;" onclick="return confirm('¿Estás seguro de que deseas eliminar este transporte?');"
-                       href="@Url.Action("Delete", "Vuelos", new { id_Vuelo = vuelos.Id_Vuelo})"><img src="~/Imagen/eliminar.png" alt="Eliminar" style="width: 30px; height: 30px;" /></a>
+                    <a class="btn btn-primary" style="background-color: #FFFFFF;"
+                   href="@Url.Action("Delete", "Vuelos", new { IdVuelo = vuelos.Id_Vuelo})"><img src="~/Imagen/eliminar.png" alt="Eliminar" style="width: 30px; height: 30px;" /></a>
 
                 </td>
             </tr>
