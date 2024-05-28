@@ -11,14 +11,10 @@ namespace ML
         public int Id_Vuelo { get; set; }
         public int Numero_Vuelo { get; set; }
         public string Destino { get; set; }
-
         public string Origen { get; set;}
-
-        public int Hora_Salida { get; set;}
-        public int Hora_LLegada { get;set; }
-
-        public ML.Aerolinia aerolinia { get; set; }
-
+        public string Hora_Salida { get; set;}
+        public string Hora_LLegada { get;set; }
+        public ML.Aerolinea aerolinia { get; set; }
         public List<ML.Vuelos> ListVuelos { get; set; }
     }
 }

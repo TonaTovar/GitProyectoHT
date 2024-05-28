@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ML
 {
-    public class Aerolinia
+    public class Aerolinea
     {
 
         public int Id_Aerolinia { get; set; }
 
-        public string AeroliniNombre { get; set; }
+        public string AerolineaNombre { get; set; }
 
-        public List<ML.Aerolinia>  ListAerolinias { get; set; }
+        public List<ML.Aerolinea>  ListAerolineas { get; set; }
     }
 }
