@@ -151,16 +151,15 @@ namespace PL.Controllers
                 }
             }
         }
-        [HttpDelete]
-        public IActionResult Delete(ML.Vuelos vuelos)
+        public IActionResult Delete(int? IdVuelo)
         {
-            if (vuelos.Id_Vuelo != 0)
+            if (IdVuelo != 0)
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.BaseAddress = new Uri("http://localhost:7240/api/Vuelos/");
+                    client.BaseAddress = new Uri("https://localhost:7240/api/Vuelos/");
 
-                    var responseTask = client.DeleteAsync("Delete?IdVuelo=" + vuelos.Id_Vuelo);
+                    var responseTask = client.DeleteAsync("Delete?IdVuelo=" + IdVuelo);
 
                     responseTask.Wait();
 

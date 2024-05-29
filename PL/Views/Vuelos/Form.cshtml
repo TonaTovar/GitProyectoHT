@@ -3,85 +3,80 @@
     ViewData["Title"] = "Form";
 }
 
-<h1>Form</h1>
+<div style="text-align: center; background-color: #d6eafa; padding: 20px;">
+    <h2>Datos de Vuelo</h2>
 
-@using (Html.BeginForm("Form", "Vuelos", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div style="display: flex; flex-wrap: wrap;">
-        <div style="flex-basis: 33.33%; padding: 5px;">
+    <div style="display: flex; justify-content: center;">
+        <div style="border: 2px solid #ccc; border-radius: 10px; padding: 20px; width: 80%;">
 
-            <!-- Campos de la izquierda -->
-            @Html.HiddenFor(model => model.Id_Vuelo)
+            @using (Html.BeginForm("Form", "Vuelos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
 
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div style="margin-bottom: 10px;">
-                    <label style="text-align: center;">
-                        @Html.LabelFor(model => model.Origen)
-                    </label>
-                </div>
-                @Html.TextBoxFor(model => model.Origen)
+                    <div style="flex-basis: 30%; padding: 5px;">
 
-                <div style="display: flex; flex-direction: column; align-items: center;">
-                    <div style="margin-bottom: 10px;">
-                        <label style="text-align: center;">
-                            @Html.LabelFor(model => model.Destino)
-                        </label>
+                        <!-- Campos de la izquierda -->
+                    @Html.HiddenFor(model => model.Id_Vuelo)
+
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="margin-bottom: 10px;">
+                                <label style="text-align: center;">
+                                    @Html.LabelFor(model => model.Origen)
+                                </label>
+                            </div>
+                            @Html.TextBoxFor(model => model.Origen)
+
+                            <div style="margin-top: 10px;">
+                                <label style="text-align: center;">
+                                    @Html.LabelFor(model => model.Destino)
+                                </label>
+                            </div>
+                            @Html.TextBoxFor(model => model.Destino)
+                        </div>
+
                     </div>
-                    @Html.TextBoxFor(model => model.Destino)
-                </div>
-            </div>
 
+                    <div style="flex-basis: 30%; padding: 5px;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="margin-bottom: 10px;">
+                                <label style="text-align: center;">
+                                    @Html.LabelFor(model => model.Numero_Vuelo)
+                                </label>
+                            </div>
+                            @Html.TextBoxFor(model => model.Numero_Vuelo)
+
+                            <div style="margin-top: 10px;">
+                                <label style="text-align: center;">
+                                    @Html.LabelFor(model => model.Hora_Salida)
+                                </label>
+                            </div>
+                            @Html.TextBoxFor(model => model.Hora_Salida)
+                        </div>
+                    </div>
+
+                    <div style="flex-basis: 30%; padding: 5px;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="margin-bottom: 10px;">
+                                <label style="text-align: center;">
+                                    @Html.LabelFor(model => model.Hora_LLegada)
+                                </label>
+                            </div>
+                            @Html.TextBoxFor(model => model.Hora_LLegada)
+
+                            <div style="margin-top: 10px;">
+                                <label style="text-align: center;">
+                                    @Html.LabelFor(model => model.aerolinia.AerolineaNombre)
+                                </label>
+                            </div>
+                            @Html.DropDownListFor(Model => Model.aerolinia.Id_Aerolinia, new SelectList(Model.aerolinia.ListAerolineas, "Id_Aerolinia", "AerolineaNombre"), "Seleccione una opción", new { @class = "form-control mb-2", style = "width: 100%;" })
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button type="submit" style="padding: 10px 60px; font-size: 16px;" class="btn btn-outline-primary btn-s">Guardar</button>
+                </div>
+            }
         </div>
-
-        <div style="flex-basis: 33.33%; padding: 5px;">
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div style="margin-bottom: 10px;">
-                    <label style="text-align: center;">
-                        @Html.LabelFor(model => model.Numero_Vuelo)
-                    </label>
-                </div>
-                @Html.TextBoxFor(model => model.Numero_Vuelo)
-            </div>
-
-
-        </div>
-
-        <div style="flex-basis: 33.33%; padding: 5px;">
-
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div style="margin-bottom: 10px;">
-                    <label style="text-align: center;">
-                        @Html.LabelFor(model => model.Hora_Salida)
-                    </label>
-                </div>
-                @Html.TextBoxFor(model => model.Hora_Salida)
-            </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div style="margin-bottom: 10px;">
-                    <label style="text-align: center;">
-                        @Html.LabelFor(model => model.Hora_LLegada)
-                    </label>
-                </div>
-                @Html.TextBoxFor(model => model.Hora_LLegada)
-            </div>
-
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div style="margin-bottom: 10px;">
-                    <label style="text-align: center;">
-                        @Html.LabelFor(model => model.aerolinia.AerolineaNombre)
-                    </label>
-                </div>
-                @Html.DropDownListFor(Model => Model.aerolinia.Id_Aerolinia, new SelectList(Model.aerolinia.ListAerolineas, "Id_Aerolinia",
-            "AerolineaNombre"), "Seleccione una opcion", new { @class = "form-control mb-2" })
-            </div>
-        </div>
-
     </div>
-
-
-    <br />
-    <div style="text-align: center; margin-top: 20px;">
-        <button type="submit" style="padding: 5px 60px; font-size: 16px;" class="btn btn-outline-primary btn-s">Save</button>
-    </div>
-}
+</div>

@@ -9,7 +9,7 @@ namespace SL.Controllers
     {
         [HttpGet]
         [Route("GetAll")]
-
+            
         public IActionResult GetAll()
         {
             ML.Vuelos vuelos= new ML.Vuelos();
@@ -81,7 +81,7 @@ namespace SL.Controllers
             var result = BL.Vuelos.Delete(IdVuelo);
             if (result.Item1)
             {
-                return Ok(result.Item1);
+                return Ok(result);
             }
             else
             {
