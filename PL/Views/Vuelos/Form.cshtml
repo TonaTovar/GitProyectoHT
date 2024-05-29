@@ -1,6 +1,46 @@
 ﻿@model ML.Vuelos
 @{
     ViewData["Title"] = "Form";
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#destinoInput, #origenInput').on('input', function () {
+                var inputValue = $(this).val();
+                var regex = /^[a-zA-Z]{0,20}$/;
+                if (!regex.test(inputValue)) {
+                    $(this).css({ "border-color": "#F5B7B1" });
+                } else {
+                    $(this).css({ "border-color": "green" });
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $('#numeroVueloInput').on('input', function () {
+                var inputValue = $(this).val();
+                var regex = /^[0-9]{0,6}$/;
+                if (!regex.test(inputValue)) {
+                    $(this).css({ "border-color": "#F5B7B1" });
+                } else {
+                    $(this).css({ "border-color": "green" });
+                }
+            });
+        });
+
+        function validarHora(input, label) {
+            var valor = input.value.trim();
+            var regex24 = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+            var regex12 = /^(0?[1-9]|1[0-2]):[0-5]\d\s?(AM|PM)$/i;
+
+            if (!regex24.test(valor) && !regex12.test(valor)) {
+                $('#' + label).text("ingresa una hora válida en formato HH:mm o HH:mm AM/PM");
+                $(input).css({ "border-color": "#F5B7B1", "background-color": "#F5B7B1" });
+            } else {
+                $('#' + label).text("");
+                $(input).css({ "border-color": "green", "background-color": "#C3F3CB" });
+            }
+        }
+    </script>
 }
 
 <div style="text-align: center; background-color: #d6eafa; padding: 20px;">
@@ -24,14 +64,14 @@
                                     @Html.LabelFor(model => model.Origen)
                                 </label>
                             </div>
-                            @Html.TextBoxFor(model => model.Origen)
+                            @Html.TextBoxFor(model => model.Origen, new { @class = "form-control", id = "origenInput" })
 
                             <div style="margin-top: 10px;">
                                 <label style="text-align: center;">
                                     @Html.LabelFor(model => model.Destino)
                                 </label>
                             </div>
-                            @Html.TextBoxFor(model => model.Destino)
+                            @Html.TextBoxFor(model => model.Destino, new { @class = "form-control", id = "destinoInput" })
                         </div>
 
                     </div>
@@ -43,14 +83,15 @@
                                     @Html.LabelFor(model => model.Numero_Vuelo)
                                 </label>
                             </div>
-                            @Html.TextBoxFor(model => model.Numero_Vuelo)
+                            @Html.TextBoxFor(model => model.Numero_Vuelo, new { @class = "form-control", id = "numeroVueloInput" })
 
                             <div style="margin-top: 10px;">
                                 <label style="text-align: center;">
                                     @Html.LabelFor(model => model.Hora_Salida)
                                 </label>
                             </div>
-                            @Html.TextBoxFor(model => model.Hora_Salida)
+                            @Html.TextBoxFor(model => model.Hora_Salida, "{0:h:mm tt}", new { @class = "form-control", @type = "text", @onblur = "validarHora(this, 'horaSalidaLabel')" })
+                            <p id="horaSalidaLabel" style="color: red;"></p>
                         </div>
                     </div>
 
@@ -61,8 +102,8 @@
                                     @Html.LabelFor(model => model.Hora_LLegada)
                                 </label>
                             </div>
-                            @Html.TextBoxFor(model => model.Hora_LLegada)
-
+                            @Html.TextBoxFor(model => model.Hora_LLegada, "{0:h:mm tt}", new { @class = "form-control", @type = "text", @onblur = "validarHora(this, 'horaLLegadaLabel')" })
+                            <p id="horaLLegadaLabel" style="color: red;"></p>
                             <div style="margin-top: 10px;">
                                 <label style="text-align: center;">
                                     @Html.LabelFor(model => model.aerolinia.AerolineaNombre)
@@ -74,7 +115,7 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 20px;">
-                    <button type="submit" style="padding: 10px 60px; font-size: 16px;" class="btn btn-outline-primary btn-s">Guardar</button>
+                    <button id="btnGuardar" type="submit" style="padding: 10px 60px; font-size: 16px;" class="btn btn-outline-primary btn-s">Guardar</button>
                 </div>
             }
         </div>
